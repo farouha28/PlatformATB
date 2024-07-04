@@ -1,0 +1,40 @@
+/* Styling for the centered red text */
+p {
+    text-align: center;
+    color: red;
+    font-size: 1.2em; /* Adjust as needed */
+    margin: 20px 0;
+  }
+  
+  /* Styling for the animated video */
+  .animated-video {
+    display: block;
+    margin: 20px auto; /* Center the video */
+    width: 80%; /* Adjust the width as needed */
+    border: 2px solid #333; /* Optional border styling */
+    animation: fadeIn 2s ease-in-out; /* Example animation */
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  /* Styling for the footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer a {
+    color: #FFD700; /* Gold color for the email link */
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
