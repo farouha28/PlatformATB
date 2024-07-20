@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Modify Chef</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>ATB Bank Admin Portal</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="form-container">
+        <h2>Modify Chef</h2>
+        
+        {{#if message}}
+            <p class="message">{{message}}</p>
+        {{/if}}
+        
+        {{#if chef}}
+            <form action="/modify-chef/{{chef.id}}" method="POST">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{chef.name}}" required>
+                </div>
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" value="{{chef.age}}" required>
+                </div>
+                <div>
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" value="{{chef.department}}" required>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{chef.email}}" required>
+                </div>
+                <div>
+                    <label for="numtel">Phone Number:</label>
+                    <input type="tel" id="numtel" name="numtel" value="{{chef.numtel}}" required>
+                </div>
+                <div>
+                    <button type="submit">Save Changes</button>
+                </div>
+            </form>
+        {{else}}
+            <p>Chef not found</p>
+        {{/if}}
+    </div>
+</body>
+</html>

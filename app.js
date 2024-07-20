@@ -1,9 +1,11 @@
-const express = require("express");
-const mysql=require("mysql");
-const dotenv = require('dotenv')
-const path = require('path')
-const jwt = require('jsonwebtoken')
-dotenv.config({path: './.env'})
+const express = require('express');
+const mysql = require('mysql');
+const dotenv = require('dotenv');
+const path = require('path');
+const session = require('express-session');
+
+dotenv.config({ path: './.env' });
+
 const app = express();
 
 const db = mysql.createConnection({
@@ -13,24 +15,32 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
-
-const publicDirectory = path.join(__dirname,'./public')
+const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.set('view engine','hbs');
+
+app.set('view engine', 'hbs');
+
 db.connect((error) => {
-    if(error){
-        console.log(error)
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("MYSQL connected...");
     }
-    else{
-        console.log("MYSQL connected...")
-    }
-})
+});
 
-app.use('/',require('./routes/pages'));
-app.use('/auth',require('./routes/auth'));
+// Configure session middleware
+app.use(session({
+    secret: 'your-secret-key', // Replace with a strong secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
-app.listen(5000,()=>{
-    console.log("server started on port 5000)");
-})
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
+
+app.listen(5000, () => {
+    console.log("Server started on port 5000");
+});
