@@ -14,18 +14,18 @@ router.get('/delete-stagiaire/:id', authController.deleteStagiaire);
 
 // Encadrant routes
 router.post('/add-encadrant', authController.addEncadrant);
-router.get('/modify-encadrant/:id', authController.modifyEncadrantForm); // Added for fetching the modify form
+router.get('/modify-encadrant/:id', authController.modifyEncadrantForm);
 router.post('/modify-encadrant/:id', authController.modifyEncadrant);
 router.get('/delete-encadrant/:id', authController.deleteEncadrant);
 
 // Chef routes
-
 router.post('/add-chef', authController.addChef);
-router.get('/modify-chef/:id', authController.modifyChefForm); // Added for fetching the modify form
+router.get('/modify-chef/:id', authController.modifyChefForm);
 router.post('/modify-chef/:id', authController.modifyChef);
 router.get('/delete-chef/:id', authController.deleteChef);
 
 // Dashboard route
 router.get('/dashboard', authController.fetchDashboardData, authController.dashboard);
+router.get('/send-email-to-encadrant/:stagiaireId', authController.sendEmailToEncadrant);
 
 module.exports = router;

@@ -30,12 +30,11 @@ db.connect((error) => {
     }
 });
 
-// Configure session middleware
 app.use(session({
-    secret: 'your-secret-key', // Replace with a strong secret key
+    secret: 'your-secret-key', 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false }
 }));
 
 app.use('/', require('./routes/pages'));

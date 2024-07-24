@@ -31,7 +31,7 @@
         .active-content {
             display: block;
         }
-        .add-button, .modify-button, .delete-button {
+        .add-button, .modify-button, .delete-button, .email-button {
             margin-top: 10px;
             padding: 10px 15px;
             background-color: #4CAF50;
@@ -44,6 +44,9 @@
         }
         .delete-button {
             background-color: #f44336;
+        }
+        .email-button {
+            background-color: #008CBA;
         }
         .list-item {
             border: 1px solid #ccc;
@@ -79,13 +82,16 @@
                     <div class="list-item">
                         <strong>Name:</strong> {{this.name}}<br>
                         <strong>Age:</strong> {{this.age}}<br>
-                        <strong>Encadrant:</strong> {{this.Encadrant}}<br>
+                        <strong>Encadrant:</strong> {{this.encadrant_name}}<br>
                         <strong>Email:</strong> {{this.email}}
                         <button class="modify-button" onclick="modifyStagiaire({{this.id}})">Modify</button>
                         <button class="delete-button" onclick="deleteStagiaire({{this.id}})">Delete</button>
+                        <button class="email-button" onclick="sendEmailToEncadrant({{this.id}})">Send Email</button>
                     </div>
                 {{/each}}
             </div>
+
+
         </div>
         <div id="encadrant" class="tab-content">
             <h3>Espace Encadrant</h3>
@@ -167,6 +173,10 @@
             if (confirm('Are you sure you want to delete this chef?')) {
                 window.location.href = `/delete-chef/${id}`;
             }
+        }
+
+        function sendEmailToEncadrant(id) {
+            window.location.href = `/send-email-to-encadrant/${id}`;
         }
     </script>
 </body>

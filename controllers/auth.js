@@ -88,7 +88,17 @@ exports.login = async (req, res) => {
             // Store user in session
             req.session.user = user;
 
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -125,9 +135,9 @@ exports.login = async (req, res) => {
 
 
 exports.addStagiaire = (req, res) => {
-    const { name, age, email } = req.body;
+    const { name, age, email, encadrant } = req.body;
 
-    db.query('INSERT INTO stagiaire SET ?', { name, age, email }, (error, results) => {
+    db.query('INSERT INTO stagiaire SET ?', { name, age, email, Encadrant: encadrant }, (error, results) => {
         if (error) {
             console.log(error);
             return res.render('dashboard', {
@@ -188,6 +198,7 @@ exports.addStagiaire = (req, res) => {
         }
     });
 };
+
 exports.addEncadrant = async (req, res) => {
     try {
         const { name, age, email, departement, numtel } = req.body;
@@ -344,9 +355,20 @@ exports.dashboard = (req, res) => {
         return res.redirect('/login');
     }
 
-    const stagiairesQuery = 'SELECT * FROM stagiaire';
+    const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
+
     const encadrantsQuery = 'SELECT * FROM encadrant';
-    const chefsQuery = 'SELECT * FROM chef_departement';
+    const chefsQuery = 'SELECT * FROM chef_de_departement';
 
     db.query(stagiairesQuery, (err, stagiaires) => {
         if (err) {
@@ -355,9 +377,13 @@ exports.dashboard = (req, res) => {
                 message: 'An error occurred while fetching stagiaires',
                 stagiaires: [],
                 encadrants: [],
-                chefs: []
+                chefs: [],
+                username: req.session.user ? req.session.user.username : 'Guest'
             });
         }
+
+        // Log stagiaires for debugging
+        console.log('Stagiaires:', stagiaires);
 
         db.query(encadrantsQuery, (err, encadrants) => {
             if (err) {
@@ -366,7 +392,8 @@ exports.dashboard = (req, res) => {
                     message: 'An error occurred while fetching encadrants',
                     stagiaires,
                     encadrants: [],
-                    chefs: []
+                    chefs: [],
+                    username: req.session.user ? req.session.user.username : 'Guest'
                 });
             }
 
@@ -377,7 +404,8 @@ exports.dashboard = (req, res) => {
                         message: 'An error occurred while fetching chefs',
                         stagiaires,
                         encadrants,
-                        chefs: []
+                        chefs: [],
+                        username: req.session.user ? req.session.user.username : 'Guest'
                     });
                 }
 
@@ -392,66 +420,82 @@ exports.dashboard = (req, res) => {
     });
 };
 
+
+
 exports.modifyStagiaire = (req, res) => {
-    const { id } = req.params;
-    const { name, age, Encadrant, email } = req.body;
+    const stagiaireId = req.params.id;
+    const { name, age, email, encadrant } = req.body; // `encadrant` should capture the ID
 
-    db.query('UPDATE stagiaire SET ? WHERE id = ?', [{ name, age, email, Encadrant }, id], (error, results) => {
-        if (error) {
-            console.log(error);
-            return res.render('modify-stagiaire', {
-                message: 'An error occurred while updating the stagiaire',
-                stagiaire: { id, name, age, email, Encadrant }
-            });
-        } else {
-            // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
-            const encadrantsQuery = 'SELECT * FROM encadrant';
-            const chefsQuery = 'SELECT * FROM chef_departement';
+    const updateQuery = 'UPDATE stagiaire SET name = ?, age = ?, email = ?, Encadrant = ? WHERE id = ?';
+    const values = [name, age, email, encadrant, stagiaireId];
 
-            db.query(stagiairesQuery, (err, stagiaires) => {
+    db.query(updateQuery, values, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send('An error occurred while updating the stagiaire.');
+        }
+
+        // Queries for fetching updated lists
+        const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
+        const encadrantsQuery = 'SELECT * FROM encadrant';
+        const chefsQuery = 'SELECT * FROM chef_departement';
+
+        db.query(stagiairesQuery, (err, stagiaires) => {
+            if (err) {
+                console.log(err);
+                return res.render('dashboard', {
+                    message: 'An error occurred while fetching stagiaires',
+                    stagiaires: [],
+                    encadrants: [],
+                    chefs: [],
+                    username: req.session.user ? req.session.user.username : 'Guest'
+                });
+            }
+
+            db.query(encadrantsQuery, (err, encadrants) => {
                 if (err) {
                     console.log(err);
                     return res.render('dashboard', {
-                        message: 'An error occurred while fetching stagiaires',
-                        stagiaires: [],
+                        message: 'An error occurred while fetching encadrants',
+                        stagiaires,
                         encadrants: [],
-                        chefs: []
+                        chefs: [],
+                        username: req.session.user ? req.session.user.username : 'Guest'
                     });
                 }
 
-                db.query(encadrantsQuery, (err, encadrants) => {
+                db.query(chefsQuery, (err, chefs) => {
                     if (err) {
                         console.log(err);
                         return res.render('dashboard', {
-                            message: 'An error occurred while fetching encadrants',
+                            message: 'An error occurred while fetching chefs',
                             stagiaires,
-                            encadrants: [],
-                            chefs: []
+                            encadrants,
+                            chefs: [],
+                            username: req.session.user ? req.session.user.username : 'Guest'
                         });
                     }
 
-                    db.query(chefsQuery, (err, chefs) => {
-                        if (err) {
-                            console.log(err);
-                            return res.render('dashboard', {
-                                message: 'An error occurred while fetching chefs',
-                                stagiaires,
-                                encadrants,
-                                chefs: []
-                            });
-                        }
-
-                        res.render('dashboard', {
-                            username: req.session.user.username,
-                            stagiaires,
-                            encadrants,
-                            chefs
-                        });
+                    res.render('dashboard', {
+                        username: req.session.user ? req.session.user.username : 'Guest',
+                        stagiaires,
+                        encadrants,
+                        chefs,
+                        message: 'Stagiaire updated successfully'
                     });
                 });
             });
-        }
+        });
     });
 };
 
@@ -497,7 +541,17 @@ exports.modifyStagiaireForm = (req, res) => {
 
 
 exports.fetchDashboardData = (req, res, next) => {
-    const stagiairesQuery = 'SELECT * FROM stagiaire';
+    const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
     const encadrantsQuery = 'SELECT * FROM encadrant';
     const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -547,7 +601,17 @@ exports.deleteStagiaire = (req, res) => {
             });
         } else {
             // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -613,7 +677,17 @@ exports.modifyEncadrant = (req, res) => {
             });
         } else {
             // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -709,7 +783,17 @@ exports.deleteEncadrant = (req, res) => {
             });
         } else {
             // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -802,7 +886,17 @@ exports.modifyChef = (req, res) => {
             });
         } else {
             // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -870,7 +964,17 @@ exports.deleteChef = (req, res) => {
             });
         } else {
             // Fetch the updated lists
-            const stagiairesQuery = 'SELECT * FROM stagiaire';
+            const stagiairesQuery = `
+        SELECT
+            s.id,
+            s.name,
+            s.age,
+            s.email,
+            e.name AS encadrant_name
+        FROM
+            stagiaire s
+        LEFT JOIN
+            encadrant e ON s.encadrant = e.id`;
             const encadrantsQuery = 'SELECT * FROM encadrant';
             const chefsQuery = 'SELECT * FROM chef_departement';
 
@@ -924,3 +1028,104 @@ exports.deleteChef = (req, res) => {
         }
     });
 };
+exports.getAddStagiairePage = (req, res) => {
+    db.query('SELECT * FROM encadrant', (err, encadrants) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send('An error occurred while fetching encadrants.');
+        }
+        res.render('add-stagiaire', {
+            encadrants
+        });
+    });
+};
+
+
+
+const nodemailer = require('nodemailer');
+
+exports.sendEmailToEncadrant = (req, res) => {
+    const { stagiaireId } = req.params;
+
+    // Get the stagiaire and encadrant details from the database
+    const query = `
+        SELECT s.name AS stagiaireName, s.email AS stagiaireEmail, e.name AS encadrantName, e.email AS encadrantEmail
+        FROM stagiaire s
+        JOIN encadrant e ON s.encadrant = e.id
+        WHERE s.id = ?
+    `;
+
+    db.query(query, [stagiaireId], (error, results) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('An error occurred while fetching stagiaire and encadrant details.');
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send('Stagiaire or encadrant not found.');
+        }
+
+        const { stagiaireName, stagiaireEmail, encadrantName, encadrantEmail } = results[0];
+
+        // Create a transporter for sending the email
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'brahemraed@gmail.com',
+                pass: 'xrvvnqxmpikopuvb'
+            }
+        });
+
+        const mailOptions = {
+            from: 'brahemraed@gmail.com',
+            to: encadrantEmail,
+            subject: `Information about Stagiaire ${stagiaireName}`,
+            text: `Hello ${encadrantName},\n\nThis is an email regarding your stagiaire ${stagiaireName}.\n\nBest regards,\nATB Bank`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).send('An error occurred while sending the email.');
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.redirect('/dashboard'); // Redirect to dashboard after sending the email
+            }
+        });
+    });
+};
+
+
+// In auth.js
+exports.getModifyStagiairePage = (req, res) => {
+    const stagiaireId = req.params.id; // Assuming the ID is passed in the URL
+
+    // Fetch the stagiaire details
+    db.query('SELECT * FROM stagiaire WHERE id = ?', [stagiaireId], (err, stagiaireResults) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send('An error occurred while fetching stagiaire details.');
+        }
+
+        if (stagiaireResults.length === 0) {
+            return res.status(404).send('Stagiaire not found.');
+        }
+
+        const stagiaire = stagiaireResults[0];
+
+        // Fetch the list of encadrants
+        db.query('SELECT * FROM encadrant', (err, encadrants) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send('An error occurred while fetching encadrants.');
+            }
+
+            res.render('modify-stagiaire', {
+                stagiaire,
+                encadrants
+            });
+        });
+    });
+};
+
+// Other existing exports...

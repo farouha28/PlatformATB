@@ -6,30 +6,47 @@
     <link rel="stylesheet" href="/style.css">
     <title>Modify Stagiaire</title>
     <style>
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #fff;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .form-container input {
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], input[type="number"], input[type="email"], select {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
+            font-size: 16px;
         }
-        .form-container button {
-            padding: 10px 15px;
+        button {
             background-color: #4CAF50;
             color: white;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
-        .form-container button:hover {
+        button:hover {
             background-color: #45a049;
         }
     </style>
@@ -40,32 +57,51 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/login">Logout</a></li>
-        </ul> 
+        </ul>
     </nav>
-    <div class="form-container">
+    <div class="container">
         <h2>Modify Stagiaire</h2>
-       <form action="/modify-stagiaire/{{stagiaire.id}}" method="POST">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{stagiaire.name}}" required>
+        <form action="/modify-stagiaire/{{stagiaire.id}}" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{stagiaire.name}}" required>
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" value="{{stagiaire.age}}" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{stagiaire.email}}" required>
+            </div>
+            <div>
+                <label for="encadrant">Encadrant:</label>
+                <select id="encadrant" name="encadrant" required>
+                    {{#each encadrants}}
+                        <option value="{{this.id}}" data-name="{{this.name}}">
+                            {{this.name}}
+                        </option>
+                    {{/each}}
+                </select>
+            </div>
+            <div>
+                <button type="submit">Save Changes</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" value="{{stagiaire.age}}" required>
-    </div>
-    <div>
-        <label for="Encadrant">Encadrant:</label>
-        <input type="text" id="Encadrant" name="Encadrant" value="{{stagiaire.Encadrant}}" required>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{stagiaire.email}}" required>
-    </div>
-    <div>
-        <button type="submit">Save Changes</button>
-    </div>
-</form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var stagiaireEncadrant = "{{stagiaire.encadrant}}";
+            var selectElement = document.getElementById('encadrant');
+            var options = selectElement.options;
 
-    </div>
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value == stagiaireEncadrant) {
+                    options[i].selected = true;
+                    break;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
