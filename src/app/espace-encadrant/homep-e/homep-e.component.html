@@ -1,0 +1,43 @@
+<main>
+  <div class="home-page-encadrant">
+    <!-- Navbar pour l'espace encadrant -->
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li><a routerLink="/espace-encadrant/reclamation">Reclamations</a></li>
+      </ul>
+      <button class="logout-button" (click)="logout()">Déconnexion</button>
+    </nav>
+ <!-- Icône de retour à la page d'accueil -->
+ <a routerLink="/" class="home-link">
+    <i class="fas fa-home"></i>
+  </a>
+    <!-- Contenu de la page d'accueil -->
+    <section class="main-content">
+      <h1 class="title">Liste des Stagiaires</h1>
+
+      <!-- Tableau pour la liste des stagiaires -->
+      <table class="stagiaires-table">
+        <thead>
+          <tr>
+            <th>Nom du Stagiaire</th>
+            <th>Sujet attribué</th>
+            <th>Période de stage</th>
+            <th>Université</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stagiaire of stagiaires">
+            <td>{{ stagiaire.nom }}</td>
+            <td>{{ stagiaire.sujet }}</td>
+            <td>{{ stagiaire.periode }}</td>
+            <td>{{ stagiaire.universite }}</td>
+            <td>
+              <a href="#" (click)="consulterDocument('rapport_stage')">Consulter Rapport de stage</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</main>

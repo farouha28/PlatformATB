@@ -1,0 +1,31 @@
+<main>
+    <div class="reclamation">
+      <!-- Header de la page de réclamation -->
+      <header class="reclamation-header">
+        <!-- Icône de retour à la page d'accueil -->
+  <a routerLink="/espace-encadrant/homep-e" class="home-link">
+    <i class="fas fa-home"></i>
+  </a>
+        <aside class="logo-container">
+            <img class="animated-logo" src="/assets/logo.svg" alt="Logo animé ATB">
+          </aside>
+        <h1>Boîte de Réception des Mails</h1>
+      </header>
+  
+      <!-- Liste des mails -->
+      <section class="mail-list">
+        <div class="mail-item" *ngFor="let mail of mails">
+          <div class="mail-meta">
+            <div class="mail-sender">{{ mail.sender }}</div>
+            <div class="mail-subject">{{ mail.subject }}</div>
+            <div class="mail-date">{{ mail.date | date: 'dd/MM/yyyy HH:mm' }}</div>
+          </div>
+          <div class="mail-content">{{ mail.content }}</div>
+        </div>
+      </section>
+      
+    </div>
+    
+
+  </main>
+  

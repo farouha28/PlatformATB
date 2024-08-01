@@ -30,6 +30,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   showNavbar = true;
   showFooter = true;
+  
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -42,5 +43,7 @@ export class AppComponent {
   private updateVisibility(url: string) {
     this.showNavbar = url === '/';
     this.showFooter = url === '/';
+    
+    
   }
 }

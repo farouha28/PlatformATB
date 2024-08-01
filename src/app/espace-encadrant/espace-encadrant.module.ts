@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { EspaceEncadrantComponent } from './espace-encadrant.component'; // Assurez-vous que c'est le composant correct
+import { EspaceEncadrantComponent } from './espace-encadrant.component';
+import { HomepEComponent } from './homep-e/homep-e.component';
+import { ReclamationComponent } from './reclamation/reclamation.component';
 
 @NgModule({
   declarations: [
-    EspaceEncadrantComponent // Déclarez ici le composant EspaceEncadrantComponent, pas le module
+    EspaceEncadrantComponent,
+    HomepEComponent,
+    ReclamationComponent// Déclarez ici le composant EspaceEncadrantComponent, pas le module
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: 'espace-encadrant', component: EspaceEncadrantComponent }, // Utilisez le composant ici, pas le module
+      { path: '', component: EspaceEncadrantComponent }, // Utilisez le composant ici, pas le module
+     // { path: 'home-page-encadrant', component: HomePageEncadrantComponent }
       // Ajoutez d'autres routes spécifiques à EspaceEncadrantComponent si nécessaire
     ])
   ],

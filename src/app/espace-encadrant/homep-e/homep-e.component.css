@@ -1,0 +1,94 @@
+.home-page-encadrant {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgb(118, 1, 1);
+    border-bottom: 1px solid #ebd9d9;
+  }
+  
+  .navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar-list li {
+    margin-right: 20px;
+  }
+  
+  .navbar-list li a {
+    text-decoration: none;
+    color: #f5efef;
+    font-weight: bold;
+  }
+  
+  .logout-button {
+    background-color: rgb(118, 1, 1);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .logout-button:hover {
+    background-color: #ede8e9;
+  }
+  .home-link {
+    position: fixed; /* Position fixe pour que l'icône reste visible en haut à gauche */
+    top: 20px; /* Espace depuis le haut */
+    left: 20px; /* Espace depuis la gauche */
+    font-size: 24px; /* Taille de l'icône */
+    color: rgb(118, 1, 1); /* Couleur de l'icône */
+    text-decoration: none; /* Supprime la décoration de texte */
+    background: #f9f9f9; /* Fond clair */
+    padding: 10px; /* Espace autour de l'icône */
+    border-radius: 50%; /* Coins arrondis */
+    box-shadow: 0 0 10px rgb(118, 1, 1); /* Ombre légère */
+    transition: background-color 0.3s, color 0.3s; /* Transition pour les changements de couleur */
+  }
+  
+  .home-link:hover {
+    background-color:rgb(118, 1, 1); /* Couleur de fond au survol */
+    color: #fff; /* Couleur de l'icône au survol */
+  }
+  
+  .main-content {
+    margin-top: 20px;
+  }
+  
+  .title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .stagiaires-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .stagiaires-table th,
+  .stagiaires-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .stagiaires-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .stagiaires-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  

@@ -1,0 +1,154 @@
+/* Styles for the main container */
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh; /* Occupy full viewport height */
+    padding: 20px; /* Padding around the content */
+  }
+  
+  /* Styles for the navbar */
+  .navbar {
+    width: 100%;
+    background-color: #760101; /* Dark red background */
+    padding: 10px 20px; /* Padding inside the navbar */
+    display: flex;
+    justify-content: space-between; /* Align items to the edges */
+    align-items: center; /* Center vertically */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for the navbar */
+  }
+  
+  /* Navbar links */
+  .navbar ul {
+    list-style-type: none; /* Remove list bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar ul li {
+    margin-right: 20px; /* Spacing between list items */
+  }
+  
+  .navbar ul li:last-child {
+    margin-right: 0; /* No right margin for the last item */
+  }
+  
+  .navbar a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease; /* Smooth color transition */
+  }
+  
+  .navbar a:hover {
+    color: #d7d0d0; /* Darker color on hover */
+  }
+  
+  /* Logout button */
+  .logout-button {
+    padding: 8px 16px;
+    background-color: #650909; /* Dark red background */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .logout-button:hover {
+    background-color: #efe5e5; /* Lighter background on hover */
+  }
+  
+  /* Main content section */
+  .main-content {
+    width: 100%;
+    max-width: 800px; /* Maximum width of the content */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    margin-top: 20px; /* Spacing from the navbar */
+  }
+  
+  /* Content inside main section */
+  .main-content .content {
+    width: 100%;
+    max-width: 400px; /* Maximum width of the content */
+  }
+  
+  /* Form for uploading a report */
+  form {
+    margin-top: 20px; /* Spacing from the above content */
+    background-color: #ffffff; /* White background */
+    padding: 20px; /* Padding inside the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for the form */
+    width: 100%;
+    max-width: 400px; /* Maximum width of the form */
+  }
+  
+  form label {
+    font-weight: bold;
+    margin-bottom: 10px; /* Spacing below the label */
+    display: block; /* Display block for better spacing */
+  }
+  
+  form input[type="file"] {
+    margin-bottom: 10px; /* Spacing below the file input */
+    width: 100%; /* Full width */
+  }
+  
+  form button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #008CBA; /* Blue background for the submit button */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    width: 100%; /* Full width */
+    border-radius: 4px; /* Rounded corners */
+  }
+  /* Styles pour la section des fichiers à télécharger */
+.files-section {
+    margin-top: 20px; /* Espacement en haut de la section */
+    background-color: #ffffff; /* Fond blanc */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    width: 100%;
+    max-width: 400px; /* Largeur maximale à ajuster selon vos besoins */
+  }
+  
+  .files-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .files-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .files-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .files-section a {
+    text-decoration: none;
+    color: #008CBA; /* Couleur du lien */
+    font-weight: bold;
+    transition: color 0.3s ease; /* Transition de couleur douce */
+  }
+  
+  .files-section a:hover {
+    color: #005f6b; /* Couleur de survol légèrement plus foncée */
+  }
+  form button[type="submit"]:hover {
+    background-color: #005f6b; /* Darker background on hover */
+  }
+  

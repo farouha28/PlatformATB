@@ -1,0 +1,163 @@
+/* Styles généraux */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.home-page {
+  display: flex;
+  min-height: 100vh; /* Assure que la page prend toute la hauteur */
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: #fff;
+  min-height: 100vh; /* Assure que la sidebar prend toute la hauteur */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: fixed; /* Fixe la sidebar à gauche */
+  top: 0;
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #760101;
+}
+
+.logout-button {
+  margin-top: auto;
+  padding: 10px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Main content styling */
+.main-content {
+  margin-left: 250px; /* Laisse de l'espace pour la sidebar */
+  padding: 20px;
+  width: calc(100% - 250px); /* Ajuste la largeur pour tenir compte de la sidebar */
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar styling */
+.navbar {
+  width: 100%;
+  background-color: #760101; /* Fond rouge pour la barre de navigation */
+  padding: 10px 20px; /* Espacement intérieur de la barre de navigation */
+  display: flex;
+  justify-content: space-between; /* Pour aligner les éléments à chaque extrémité */
+  align-items: center; /* Pour centrer verticalement */
+  position: relative; /* Positionne la barre de navigation au-dessus du contenu principal */
+  z-index: 10; /* Assure que la barre de navigation est au-dessus de la sidebar */
+}
+
+.home-link {
+  position: fixed; /* Position fixe pour que l'icône reste visible en haut à gauche */
+  top: 20px; /* Espace depuis le haut */
+  left: 20px; /* Espace depuis la gauche */
+  font-size: 20px; /* Taille de l'icône */
+  color: rgb(118, 1, 1); /* Couleur de l'icône */
+  text-decoration: none; /* Supprime la décoration de texte */
+  background: #f9f9f9; /* Fond clair */
+  padding: 10px; /* Espace autour de l'icône */
+  border-radius: 50%; /* Coins arrondis */
+  box-shadow: 0 0 10px rgb(118, 1, 1); /* Ombre légère */
+  transition: background-color 0.3s, color 0.3s; /* Transition pour les changements de couleur */
+}
+
+.home-link:hover {
+  background-color: rgb(118, 1, 1); /* Couleur de fond au survol */
+  color: #fff; /* Couleur de l'icône au survol */
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbar ul li {
+  margin-right: 20px; /* Espacement entre les éléments de la liste */
+}
+
+.navbar ul li:last-child {
+  margin-right: 0; /* Aucun espacement à droite pour le dernier élément */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #d7d0d0; /* Couleur de survol légèrement plus foncée */
+}
+
+/* Content section styling */
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .home-link {
+    position: static; /* Retire la position fixe pour les petits écrans */
+  }
+}

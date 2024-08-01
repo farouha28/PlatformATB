@@ -1,0 +1,83 @@
+.reclamation {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border: 2px solid rgb(118, 1, 1);
+    border-radius: 4px;
+  }
+  
+  .reclamation-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo-container {
+    margin-right: 20px; /* Ajuste la marge entre le logo et le titre */
+  }
+  
+  .animated-logo {
+    width: 60px; /* Ajuste la taille du logo */
+    height: auto;
+  }
+  
+  h1 {
+    font-size: 1.5em; /* Ajuste la taille du titre */
+    margin: 0; /* Supprime les marges par défaut */
+  }
+  
+  .mail-list {
+    border: none;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .mail-item {
+    border-bottom: 1px solid rgb(118, 1, 1);
+    padding: 10px;
+  }
+  
+  .mail-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .mail-sender {
+    font-weight: bold;
+  }
+  
+  .mail-subject {
+    flex: 1;
+    margin-left: 10px;
+  }
+  .home-link {
+    position: fixed; /* Position fixe pour que l'icône reste visible en haut à gauche */
+    top: 20px; /* Espace depuis le haut */
+    left: 20px; /* Espace depuis la gauche */
+    font-size: 24px; /* Taille de l'icône */
+    color: rgb(118, 1, 1); /* Couleur de l'icône */
+    text-decoration: none; /* Supprime la décoration de texte */
+    background: #f9f9f9; /* Fond clair */
+    padding: 10px; /* Espace autour de l'icône */
+    border-radius: 50%; /* Coins arrondis */
+    box-shadow: 0 0 10px rgb(118, 1, 1); /* Ombre légère */
+    transition: background-color 0.3s, color 0.3s; /* Transition pour les changements de couleur */
+  }
+  
+  .home-link:hover {
+    background-color:rgb(118, 1, 1); /* Couleur de fond au survol */
+    color: #fff; /* Couleur de l'icône au survol */
+  }
+  
+  .mail-date {
+    font-size: 0.9em;
+    color: rgb(118, 1, 1);
+  }
+  
+  .mail-content {
+    margin-top: 10px;
+  }
+  
